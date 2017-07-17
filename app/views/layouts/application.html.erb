@@ -1,14 +1,40 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Seafood</title>
+    <title>Son of Cod</title>
     <%= csrf_meta_tags %>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+    <div class="container">
+      <div>
+        <h1 id="test">Fish for the common man</h1>
+      </div>
+
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+      </ul>
+
+      <% if !current_user %>
+        <%= link_to 'Sign Up', new_user_registration_path  %>
+        <%= link_to 'Sign In', new_user_session_path  %>
+
+      <% else %>
+        <%= link_to 'Sign Out', destroy_user_session_path, method: 'delete' %>
+        <%= link_to 'Edit/Delete Account', edit_user_registration_path %>
+        <%= link_to "All Products", products_path %>
+      <% end %>
+
+      <% if current_user && current_user.admin %>
+      <%= link_to "Add a Product", new_product_path %>
+        <h1>Admin activated</h1>
+      <% end %>
+      <%= yield %>
+    </div>
   </body>
 </html>
